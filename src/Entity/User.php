@@ -10,7 +10,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
- * @UniqueEntity(fields="username", message="Username already taken")
  */
 class User implements UserInterface
 {
@@ -29,12 +28,6 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $username;
-
-    /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
@@ -48,6 +41,22 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function getEmail()
     {
         return $this->email;
@@ -60,12 +69,7 @@ class User implements UserInterface
 
     public function getUsername()
     {
-        return $this->username;
-    }
-
-    public function setUsername($username)
-    {
-        $this->username = $username;
+        return $this->email;
     }
 
     public function getPlainPassword()
@@ -97,9 +101,11 @@ class User implements UserInterface
 
     public function getRoles()
     {
+        return null;
     }
 
     public function eraseCredentials()
     {
+        return null;
     }
 }
